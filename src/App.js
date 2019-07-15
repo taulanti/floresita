@@ -12,7 +12,7 @@ class App extends Component {
           <Search />
           <CardItems />
         </Layout>
-      </div >
+      </div>
     );
   }
 }
