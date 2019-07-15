@@ -1,8 +1,30 @@
 .NavigationItems {
-  margin: 1.5em;
+  margin: 4.5em;
   padding: auto;
   list-style: none;
   display: flex;
   justify-content: space-between;
 }
 
+.window {
+  width: 1100px;
+  margin: 0 auto;
+  position: absolute;
+  top: 380px;
+  box-shadow: 20px 20px 40px 1px #656565;
+  z-index: 400;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 401;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.ModalClosed {
+  display: none;
+}

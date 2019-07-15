@@ -16,7 +16,7 @@ class Search extends Component {
           <div className={classes.Input}>
             <h1 className={classes.Text}>Discover flowers around you</h1>
             <h5 className={classes.Text2}><i>Search for over 8000 flowers</i></h5>
-            <Form.Control type="text" size="lg" placeholder="Search a flower" onChange={(e) => search(e.target.value)} value={inputText} />
+            <Form.Control type="text" size="lg" placeholder="Search a flower" onChange={(e) => search(e.target.value)} value={inputText}/>
           </div>
         </div >
       </div >
