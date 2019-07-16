@@ -13,7 +13,6 @@
   height: 100px;
   width: 100%;
   margin: -1em 0 0;
-  overflow: hidden;
   z-index: 1;
   box-shadow: inset;
   position: fixed;

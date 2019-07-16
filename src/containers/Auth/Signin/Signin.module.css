@@ -6,46 +6,29 @@
   letter-spacing: normal;
   text-align: center;
   color: #334144;
-  margin-top: -15px;
-  font-size:20px;
+  margin-top: 20px;
 }
 
 .form_wrapper {
   margin: 15px;
+  top:0;
 }
 
-.input_1{
-  display: inline-block;
-  margin: 10px;
+.input_1 {
+  margin: 20px;
   border: none;
   font-size: 15px;
-  width: 90%;
+  display: flex;
+  flex-direction: column;
 }
 
-.input_1 input{
-  margin:5px;
-  border:none;
+.input_1 input {
+  margin: 5px;
+  border: none;
   border-radius: 5px;
   background-color: lightgrey;
   height: 40px;
   padding-left: 2px;
-  
-}
-
-.input_2{
-  margin: -6px;
-  border: none;
-  font-size: 15px;
-}
-
-.input_2 input{
-  padding-left: 10px;
-  margin:5px;
-  border:none;
-  border-radius: 5px;
-  background-color: lightgrey;
-  height: 40px;
-  width:85%;
 }
 
 .button {
@@ -64,31 +47,38 @@
   margin-top: 10px;
 }
 
+.buttons button{
+  width: 40%;
+  height: 45px;
+  background-color: #ed998c;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-family: Ubuntu;
+  font-weight: 500;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-align: center;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 50px;
+}
+
+
 @media (max-width: 479px) {
-
-
-  .input_1 input{
-    border:none;
+  .input_1 input {
+    border: none;
     border-radius: 5px;
     background-color: lightgrey;
     height: 40px;
-    width:85%;
+    width: 85%;
     max-width: 100%;
   }
-
-  .input_2 input{
-    margin-left:6px;
-    border:none;
-    border-radius: 5px;
-    background-color: lightgrey;
-    height: 40px;
-    width:75%;
-    max-width: 100%;;
-   
-  }
-
-  .button{
+  .button {
     max-width: 100%;
     text-align: center;
-  };
+  }
+  ;
 }
+

@@ -1,9 +1,11 @@
 .NavigationItems {
-  margin: 4.5em;
   padding: auto;
   list-style: none;
   display: flex;
   justify-content: space-between;
+  font-size: 19px;
+  margin-top: 30px;
+  margin-right: 60px;
 }
 
 .window {
@@ -15,15 +17,6 @@
   z-index: 400;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 401;
-  background: rgba(0, 0, 0, 0.3);
-}
 
 .ModalClosed {
   display: none;

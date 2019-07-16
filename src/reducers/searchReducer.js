@@ -1,4 +1,4 @@
-import { SEARCH_FLOWER } from './actions';
+import { SEARCH_FLOWER } from '../store/actions';
 const importAll = (r) => {
   return r.keys().map(r);
 }
@@ -28,7 +28,7 @@ const initialState = {
   filtered: []
 };
 
-const reducer = (state = initialState, action) => {
+const searchReducer = (state = initialState, action) => {
   if (action.type === SEARCH_FLOWER) {
     const { inputText } = action;
     const filtered = state.flowerList.filter((flower) => flower.name.includes(inputText));
@@ -44,4 +44,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default searchReducer;
