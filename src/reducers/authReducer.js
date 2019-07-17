@@ -13,12 +13,15 @@ const authStart = (state, action) => {
 }
 
 const authSuccess = (state, action) => {
+  console.log('action: '+action);
   return {
     ...state,
     token: action.idToken,
     userId: action.userId,
     error: null,
-    loading: false
+    loading: false,
+    hasUserSignedUp: action.hasUserSignedUp,
+    email: action.email
   };
 }
 

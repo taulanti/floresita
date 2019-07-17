@@ -9,7 +9,6 @@ import {connect} from 'react-redux';
 class App extends Component {
 
   componentDidMount(){
-    console.log('here');
     this.props.onTryAutoSignUp();
   }
   render() {

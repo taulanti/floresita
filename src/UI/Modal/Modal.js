@@ -4,7 +4,7 @@ import classes from "./Modal.module.css";
 const Modal = (props) => {
   return (
     <div>
-      <div className={classes.overlay} />
+      <div className={props.show? classes.overlay : null} />
       <div className={classes.Modal}
         style={{
           transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',

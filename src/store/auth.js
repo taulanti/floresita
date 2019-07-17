@@ -8,16 +8,19 @@ export const AUTH_LOGOUT_SIGNUP = 'AUTH_LOGOUT_SIGNUP';
 
 export const authStart = () => {
   return {
-    type: AUTH_START
+    type: AUTH_START,
   };
 };
 
-export const authSuccess = (token, userId) => {
-  return {
-    type: AUTH_SUCCESS,
-    idToken: token,
-    userId: userId
-  };
+export const authSuccess = (token, userId, isSignup, email) => {
+  return isSignup ? {type: AUTH_SUCCESS, idToken: null, userId: null, hasUserSignedUp: true, email: email } :
+    {
+      type: AUTH_SUCCESS,
+      idToken: token,
+      userId: userId,
+      hasUserSignedUp: false,
+      email: email
+    };
 };
 
 export const authFail = (error) => {
@@ -27,25 +30,27 @@ export const authFail = (error) => {
   };
 };
 
-export const logout = (hasUserSignedUp) => {
+export const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('exiprationDate');
   localStorage.removeItem('userId');
   return {
     type: AUTH_LOGOUT,
-    hasUserSignedUp:hasUserSignedUp
+    hasUserSignedUp: false
   };
 };
 
 export const checkAuthTimeOut = (expirationTime) => {
   return dispatch => {
     setTimeout(() => {
-      dispatch(logout(false));
-    }, expirationTime * 1000);
+      dispatch(logout());
+    }, expirationTime*100);
   }
 }
 
+
 export const auth = (email, password, isSignup) => {
+  console.log('inside auth: ' + isSignup);
   return dispatch => {
     const authData = {
       email: email,
@@ -54,7 +59,7 @@ export const auth = (email, password, isSignup) => {
     };
     dispatch(authStart());
     let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCPOUGM5JVIIrIMfU8WzqAds6rdV6Of_k0';
-    if (!isSignup) {  
+    if (!isSignup) {
       url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCPOUGM5JVIIrIMfU8WzqAds6rdV6Of_k0';
       axios.post(url, authData)
         .then(response => {
@@ -63,23 +68,17 @@ export const auth = (email, password, isSignup) => {
           localStorage.setItem('token', response.data.idToken);
           localStorage.setItem('expirationDate', expirationDate)
           localStorage.setItem('userId', response.data.localId);
-          dispatch(authSuccess(response.data.idToken, response.data.localId));
+          dispatch(authSuccess(response.data.idToken, response.data.localId, false, response.data.email));
           dispatch(checkAuthTimeOut(response.data.expiresIn));
         })
         .catch(err => {
           dispatch(authFail(err.response.data.error));
         });
     } else {
+      console.log('it is signup');
       axios.post(url, authData)
         .then(response => {
-          console.log('entered here: '+response.data);
-          /*const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-          localStorage.setItem('token', response.data.idToken);
-          localStorage.setItem('expirationDate', expirationDate)
-          localStorage.setItem('userId', response.data.localId);
-          dispatch(authSuccess(response.data.idToken, response.data.localId));
-          dispatch(checkAuthTimeOut(response.data.expiresIn));*/
-          dispatch(logout(true));
+          dispatch(authSuccess(null, null, true));
         })
         .catch(err => {
           dispatch(authFail(err.response.data.error));
@@ -89,17 +88,18 @@ export const auth = (email, password, isSignup) => {
   };
 };
 
+
 export const authCheckState = () => {
   return dispatch => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); 
     if (!token) {
-      dispatch(logout(false));
+      console.log(`inside authCheckState, token: ${token}`);
+      dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem('expirationDate'));
       if (expirationDate > new Date()) {
-        dispatch(auth());
         const userId = localStorage.getItem('userId');
-        dispatch(authSuccess(token, userId));
+        dispatch(authSuccess(token, userId, false));
         dispatch(checkAuthTimeOut((expirationDate.getTime() - new Date().getTime()) / 1000));
       } else {
         dispatch(logout());

@@ -4,6 +4,7 @@ import classes from './Signin.module.css';
 import * as actions from '../../../store/auth';
 import { connect } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
+import Profile from '../../Profile/Profile';
 
 class Signin extends Component {
 
@@ -11,7 +12,8 @@ class Signin extends Component {
     email: '',
     password: '',
     loading: false,
-    isModalOpen: true
+    isModalOpen: true,
+    isProfileOpen: false,
   }
 
   inputChangeHandler = (event, control) => {
@@ -32,8 +34,10 @@ class Signin extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
-    this.setState({ isModalOpen: true });
+    this.setState({ loading: true });
     this.props.onAuth(this.state.email, this.state.password, false);
+
+
   }
 
   onOkHandler = () => {
@@ -44,12 +48,16 @@ class Signin extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  profileHandler = () => {
+    this.setState({ isProfileOpen: true, isModalOpen: false });
+  }
+
   render() {
     let form;
     if (this.props.loading) {
       form = <Spinner animation="border" variant="danger" />
     } else {
-      if (!this.props.isAuthenticated) {
+      if (!this.props.isAuthenticated && this.state.isModalOpen) {
         form = <div>
           <h4 className={classes.Text_Style_2}>Welcome back</h4>
           <div className={classes.input_1}>
@@ -59,10 +67,15 @@ class Signin extends Component {
           <button className={classes.button} onClick={this.submitHandler}> Login to your Account</button>
           <button className={classes.button} onClick={this.onModalClose}> Cancel </button>
         </div >;
-      } else {
+      }
+      else if (this.state.isProfileOpen && this.props.isAuthenticated) {
+        form = <Profile />
+      }
+      else if (this.props.isAuthenticated) {
+        console.log('entered hereeeeeee');
         form = [<p>Congratulations! You have successfully logged into FlowrSpot!</p>,
         <div className={classes.buttons}><button onClick={this.onOkHandler.bind(this)}>OK</button>
-          <button>Profile</button></div>]
+          <button onClick={this.profileHandler.bind(this)}> Profile</button></div>]
       }
 
     }
@@ -76,12 +89,11 @@ class Signin extends Component {
       )
     }
     return (
-
-      this.state.isModalOpen ?
-        <Modal show={this.props.show}>
+      this.state.isProfileOpen ? <Profile /> :
+        <Modal show={this.state.isModalOpen}>
           {errorMessage}
           {form}
-        </Modal > : null
+        </Modal>
     )
   }
 }
@@ -96,7 +108,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+    onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp)),
+    isSignedUp: () => dispatch(actions.authCheckState())
   };
 };
 

@@ -5,6 +5,7 @@ import * as actions from '../../../store/auth';
 import { connect } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 import Signin from '../Signin/Signin';
+import Profile from '../../Profile/Profile';
 
 class Signup extends Component {
 
@@ -15,7 +16,10 @@ class Signup extends Component {
     password: '',
     loading: false,
     isModalOpen: true,
+    modalClass: '',
     openLogin: false,
+    hasUserSignedUp: false,
+    isProfileOpen: false,
   }
 
   inputChangeHandler = (event, control) => {
@@ -40,11 +44,16 @@ class Signup extends Component {
   }
 
   onOkHandler = () => {
-    this.setState({ openLogin: true });
+    this.setState({ openLogin: true, isModalOpen: false});
+    this.props.isSignedUp();
   }
 
   onCloseModal = () => {
     this.setState({ isModalOpen: false });
+  }
+
+  profileHandler = () => {
+    this.setState({ isProfileOpen: true });
   }
 
   render() {
@@ -52,7 +61,7 @@ class Signup extends Component {
     if (this.props.loading) {
       form = <Spinner animation="border" variant="danger" />
     } else {
-      if (!this.props.isAuthenticated && !this.props.hasUserSignedUp) {
+      if (!this.props.isAuthenticated && !this.props.hasUserSignedUp && this.state.isModalOpen) {
         form = <div><h4 className={classes.Text_Style_2}>Create an account</h4>
           <div className={classes.input_1}>
             <input type="text" name="fname" placeholder=" First name" onChange={(e) => this.inputChangeHandler(e, 'fname')}></input>
@@ -63,12 +72,17 @@ class Signup extends Component {
             <input type="password" name="password" placeholder=" Password" onChange={(e) => this.inputChangeHandler(e, 'password')}></input>
           </div>
           <button className={classes.button} onClick={this.submitHandler}> Create Account</button>
-          <button className={classes.button} onClick={this.onCloseModal}> Cancel</button>;</div>;
-      } else {
-        form = <div><p>Congratulations! You have successfully signed up for FlowrSpot!</p>
-          <button className={classes.button} onClick={this.onOkHandler.bind(this)}>OK</button></div>;
+          <button className={classes.button} onClick={this.onCloseModal}> Cancel</button></div>;
+      }
+      else if (this.state.openLogin) {
+        form = <Signin openLogin={this.state.openLogin} />
+      }
+      else if (this.props.hasUserSignedUp) {
+        form = [<p>You have succesfully signed up!</p>, <button className={classes.button} onClick={this.onOkHandler}>OK</button>];
       }
     }
+
+
 
     let errorMessage = null;
     if (this.props.error) {
@@ -76,17 +90,12 @@ class Signup extends Component {
         <p><strong>{this.props.error.message}</strong></p>
       )
     }
-    if (this.state.openLogin) {
-      form = <Signin show={this.state.openLogin} />;
-    }
-
+    console.log('ENTERED HEREE');
     return (
-      this.state.openLogin ? form :
-        (this.state.isModalOpen ?
-          <Modal show={this.props.show}>
-            {errorMessage}
-            {form}
-          </Modal > : null)
+      this.state.openLogin ? form : <Modal show={this.state.isModalOpen}>
+        {errorMessage}
+        {form}
+      </Modal>
     )
   }
 }
@@ -102,7 +111,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+    onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+    isSignedUp: () => dispatch(actions.authCheckState())
   };
 };
 
