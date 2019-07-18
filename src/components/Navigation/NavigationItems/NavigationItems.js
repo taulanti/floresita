@@ -55,7 +55,7 @@ class NavigationItems extends Component {
           <NavigationItem >Latest Sightings</NavigationItem>
           {this.props.isAuthenticated ?
             [<NavigationItem >{localStorage.getItem('email')}</NavigationItem>,
-            <Avatar link="/profile" clicked={this.showModalHandler.bind(this)} />] :
+            <Avatar link="/profile" clicked={this.showModalHandler.bind(this)}>Profile</Avatar>] :
             [<NavigationItem link="/login" clicked={this.showModalHandler.bind(this)}>Login</NavigationItem>,
             <NavigationItem link="/signup" clicked={this.showModalHandler.bind(this)}>New Account</NavigationItem>]}
         </ul>

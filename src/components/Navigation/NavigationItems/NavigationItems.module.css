@@ -21,3 +21,9 @@
 .ModalClosed {
   display: none;
 }
+
+@media (max-width: 950px) {
+  .NavigationItems{
+    display: none;
+  }
+}

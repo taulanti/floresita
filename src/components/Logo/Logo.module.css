@@ -2,16 +2,17 @@
   background-color: white;
   height: 135px;
   margin-bottom: 115px;
+  margin-right: 250px;
 }
 
 .Logo img {
   width: 350px;
 }
 
-.Menu {}
 
 @media (max-width: 950px) {
   .Logo {
-    display: none;
+    height: 100px;
+    width: 110px;
   }
 }
