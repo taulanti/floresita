@@ -3,25 +3,23 @@ import CardItem from '../../containers/Card/CardItem/CardItem';
 import { CardDeck } from 'react-bootstrap';
 import classes from '../../containers/Card/CardItems.module.css';
 import { connect } from 'react-redux';
-import Signin from '../../containers/Auth/Signin/Signin';
 import { Redirect } from 'react-router-dom'
 
 class Favorites extends Component {
 
   render() {
-    console.log('favorites');
     console.log(this.props.favorites);
-    const flowers = this.props.favorites.map((flower, index) => {
-      return <CardItem key={flower.id} id={flower.id} name={flower.name} image={flower.image} />
+    const flowers = this.props.flowerList.filter((fl) => { return fl.favorite }).map((flower, index) => {
+      return <CardItem key={flower.id} id={flower.id} name={flower.name} latinName={flower.latin_name} sightings={flower.sightings} image={flower.profile_picture} />
     });
 
     return (
       <div>
         {flowers.length < 1 && this.props.isAuthenticated ? <h4 style={{ textAlign: "center" }}>You don't have favorite flowers. Go search for Flowers on flower tab and favorite them</h4> : (
-          !this.props.isAuthenticated ? <Redirect to="/login"/> : 
-          <CardDeck className={classes.Content}>
-            {flowers}
-          </CardDeck>)}
+          !this.props.isAuthenticated ? <Redirect to="/login" /> :
+            <CardDeck className={classes.Content}>
+              {flowers}
+            </CardDeck>)}
       </div>
     )
   }

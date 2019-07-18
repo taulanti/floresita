@@ -10,11 +10,13 @@ class CardItems extends Component {
     return r.keys().map(r);
   }
 
-
+  componentDidMount = () => {
+    this.props.getFlowers();
+  }
 
   render() {
     const flowers = this.props.flowerList.map((flower, index) => {
-      return <CardItem key={flower.id} id={flower.id} name={flower.name} image={flower.image}  isAuth={this.props.isAuthenticated} />
+      return <CardItem key={flower.id} favorite={flower.favorite} id={flower.id} name={flower.name} image={flower.profile_picture} latinName={flower.latin_name} sightings={flower.sightings} isAuth={this.props.isAuthenticated} />
     });
 
     return (
@@ -23,8 +25,8 @@ class CardItems extends Component {
       </CardDeck>
     )
   }
-}
 
+}
 const mapStateToProps = (state) => {
   return {
     flowerList: state.search.filtered ? state.search.filtered : state.search.flowerList,
@@ -33,7 +35,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    flowerFavorite: (id) => dispatch(actions.favorite(id))
+    flowerFavorite: (id) => dispatch(actions.favorite(id)),
+    getFlowers: () => dispatch(actions.getFlowers())
   };
 }
 
