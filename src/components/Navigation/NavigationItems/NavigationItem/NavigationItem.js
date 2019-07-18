@@ -1,6 +1,7 @@
 import React from 'react'
 
 import classes from './NavigationItem.module.css';
+import { NavLink } from 'react-router-dom';
 
 const NavigationItem = (props) => {
   let styling = [];
@@ -13,9 +14,8 @@ const NavigationItem = (props) => {
   else {
     styling.push(classes.Text_Style_2)
   }
-
   return (
-    <li className={classes.NavigationItem} onClick={() => props.clicked(props.children)}>< a href={props.link} className={styling.join(' ')}>{props.children}</a></li>
+    <li className={classes.NavigationItem}><NavLink to={props.link} activeClassName={classes.active} className={styling.join(' ')}>{props.children}</NavLink></li>
   )
 }
 

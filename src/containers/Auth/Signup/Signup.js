@@ -5,7 +5,7 @@ import * as actions from '../../../store/auth';
 import { connect } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 import Signin from '../Signin/Signin';
-import Profile from '../../Profile/Profile';
+import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
 
@@ -20,6 +20,7 @@ class Signup extends Component {
     openLogin: false,
     hasUserSignedUp: false,
     isProfileOpen: false,
+    isRedirect: false,
   }
 
   inputChangeHandler = (event, control) => {
@@ -44,12 +45,12 @@ class Signup extends Component {
   }
 
   onOkHandler = () => {
-    this.setState({ openLogin: true, isModalOpen: false});
+    this.setState({ openLogin: true, isModalOpen: false });
     this.props.isSignedUp();
   }
 
   onCloseModal = () => {
-    this.setState({ isModalOpen: false });
+    this.setState({ isModalOpen: false, isRedirect: true });
   }
 
   profileHandler = () => {
@@ -90,12 +91,12 @@ class Signup extends Component {
         <p><strong>{this.props.error.message}</strong></p>
       )
     }
-    console.log('ENTERED HEREE');
+
     return (
-      this.state.openLogin ? form : <Modal show={this.state.isModalOpen}>
+      this.state.isRedirect ? <Redirect to='/home' /> : (this.state.openLogin ? form : <Modal show={this.state.isModalOpen}>
         {errorMessage}
         {form}
-      </Modal>
+      </Modal>)
     )
   }
 }

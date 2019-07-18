@@ -4,7 +4,7 @@ import classes from './Avatar.module.css';
 
 const Avatar = (props) => {
   return (
-    <div onClick={() => props.clicked()}>
+    <div className={classes.Main} onClick={() => props.clicked()}>
       <img src={avatar} alt="FlowrSpot" className={classes.avatar} />
     </div>
 

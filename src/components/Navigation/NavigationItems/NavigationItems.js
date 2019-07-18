@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import Aux from '../../../hoc/_Aux';
 import * as actionTypes from '../../../store/auth';
 import Auth from '../../../containers/Auth/Auth';
+import { Route } from 'react-router-dom';
+import Favorites from '../../Favorites/Favorites';
 
 class NavigationItems extends Component {
 
@@ -19,7 +21,14 @@ class NavigationItems extends Component {
   }
 
   showModalHandler = (type) => {
+    console.log('method called');
     this.setState({ showModal: true, operation: type });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showModal && prevState.showModal) {
+        this.setState({ showModal: false })
+    }
   }
 
   render() {
@@ -33,20 +42,22 @@ class NavigationItems extends Component {
         modal.push(<SignIn key={Math.random(1000)} show={this.state.showModal} />)
       }
       else {
-        modal.push(<Profile key={Math.random(1000)} show={this.state.showModal} />)
+        console.log('inside navvv: ' + this.state.showModal);
+        modal.push(<Profile key={Math.random(1000)} />)
       }
     }
-
     return (
       <Aux>
         {modal}
         <ul className={classes.NavigationItems} >
-          <NavigationItem active>Flowers</NavigationItem>
-          <NavigationItem active>Favorites</NavigationItem>
-          <NavigationItem active>Latest Sightings</NavigationItem>
-          {this.props.isAuthenticated ? <Avatar clicked={this.showModalHandler.bind(this)} /> :
-            [<NavigationItem link="/#" active clicked={this.showModalHandler.bind(this)}>Login</NavigationItem>,
-            <NavigationItem link="/#" active clicked={this.showModalHandler.bind(this)}>New Account</NavigationItem>]}
+          <NavigationItem link="/home" clicked={null}>Flowers</NavigationItem>
+          <NavigationItem link="/favorites" clicked={null}>Favorites</NavigationItem>
+          <NavigationItem >Latest Sightings</NavigationItem>
+          {this.props.isAuthenticated ?
+            [<NavigationItem >{localStorage.getItem('email')}</NavigationItem>,
+            <Avatar link="/profile" clicked={this.showModalHandler.bind(this)} />] :
+            [<NavigationItem link="/login" clicked={this.showModalHandler.bind(this)}>Login</NavigationItem>,
+            <NavigationItem link="/signup" clicked={this.showModalHandler.bind(this)}>New Account</NavigationItem>]}
         </ul>
       </Aux >
     )
@@ -56,6 +67,7 @@ class NavigationItems extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    email: state.auth.email
   };
 };
 

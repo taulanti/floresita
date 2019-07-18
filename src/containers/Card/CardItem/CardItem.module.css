@@ -2,3 +2,34 @@
   height: 17rem;
   margin-bottom: 1rem;
 }
+
+.buttonWrapperClicked {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+  background-color: coral;
+  float: right;
+}
+
+
+.button1 {
+  background-image: url('../../../assets/button/button1.png');
+  background-size: 100%;
+  width: 2.5em;
+
+  height: 2.5em;
+  padding: 5px;
+  border-radius: 50%;
+  float: right;
+}
+
+.buttonClicked {
+  background-image: url('../../../assets/button/button1.png');
+  background-size: 100%;
+  width: 2.5em; 
+  height: 2.5em;
+  padding: 5px;
+  border-radius: 50%;
+  float: right;
+  background-color: #ed998c;
+}

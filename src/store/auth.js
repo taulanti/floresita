@@ -34,6 +34,7 @@ export const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('exiprationDate');
   localStorage.removeItem('userId');
+  localStorage.removeItem('email');
   return {
     type: AUTH_LOGOUT,
     hasUserSignedUp: false
@@ -44,7 +45,7 @@ export const checkAuthTimeOut = (expirationTime) => {
   return dispatch => {
     setTimeout(() => {
       dispatch(logout());
-    }, expirationTime*100);
+    }, expirationTime*1000);
   }
 }
 
@@ -68,6 +69,7 @@ export const auth = (email, password, isSignup) => {
           localStorage.setItem('token', response.data.idToken);
           localStorage.setItem('expirationDate', expirationDate)
           localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email);
           dispatch(authSuccess(response.data.idToken, response.data.localId, false, response.data.email));
           dispatch(checkAuthTimeOut(response.data.expiresIn));
         })

@@ -7,3 +7,11 @@
 .Logo img {
   width: 350px;
 }
+
+.Menu {}
+
+@media (max-width: 950px) {
+  .Logo {
+    display: none;
+  }
+}
