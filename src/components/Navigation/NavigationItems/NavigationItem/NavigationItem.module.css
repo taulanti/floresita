@@ -64,3 +64,29 @@
   background-color: var(--mycolor);
   color: white;
 }
+
+@media (max-width: 1220px){
+  .Highlight{
+    border: none;
+    background-color:white;
+    color: #334144;
+    font-size: 15px;
+  }
+
+  .Text_Style_2 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1220px){
+  .Highlight{
+    border: none;
+    background-color:white;
+    color: #334144;
+    font-size: 15px;
+  }
+
+  .Text_Style_2 {
+    font-size: 15px;
+  }
+}

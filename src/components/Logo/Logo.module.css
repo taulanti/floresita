@@ -9,8 +9,13 @@
   width: 350px;
 }
 
+@media (max-width: 1069px) and (min-width: 806px) {
+  .Logo {
+    display: none;
+  }
+}
 
-@media (max-width: 950px) {
+@media (max-width: 805px) {
   .Logo {
     height: 100px;
     width: 110px;

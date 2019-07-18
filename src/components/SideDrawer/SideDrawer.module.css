@@ -64,3 +64,9 @@
    text-align: center;
    color: #334144;
  }
+
+ @media (min-width:805px){
+   .toggle_button{
+     display: none;
+   }
+ }

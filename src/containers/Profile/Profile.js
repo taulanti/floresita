@@ -25,7 +25,7 @@ class Profile extends Component {
 
   render() {
     return (
-      this.state.logout ? <Redirect to="/home" /> : (<Modal show={(this.state.modalShow) && this.props.isAuthenticated} className={classes.button}>
+      this.state.logout || !this.state.modalShow? <Redirect to="/home" /> : (<Modal show={(this.state.modalShow) && this.props.isAuthenticated} className={classes.button}>
         <Avatar />
         <h1>{localStorage.getItem('email')}</h1>
         <button className={classes.button} onClick={() => this.logOut()}>Log out</button>
