@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
-import SignUp from '../../../containers/Auth/Signup/Signup';
 import SignIn from '../../../containers/Auth/Signin/Signin';
 import Avatar from '../../Avatar/Avatar';
 import Profile from '../../../containers/Profile/Profile';
@@ -10,8 +9,7 @@ import { connect } from 'react-redux';
 import Aux from '../../../hoc/_Aux';
 import * as actionTypes from '../../../store/auth';
 import Auth from '../../../containers/Auth/Auth';
-import { Route } from 'react-router-dom';
-import Favorites from '../../Favorites/Favorites';
+
 
 class NavigationItems extends Component {
 
@@ -56,8 +54,8 @@ class NavigationItems extends Component {
           {this.props.isAuthenticated ?
             [<NavigationItem >{localStorage.getItem('email')}</NavigationItem>,
             <Avatar link="/profile" clicked={this.showModalHandler.bind(this)}>Profile</Avatar>] :
-            [<NavigationItem link="/login" clicked={this.showModalHandler.bind(this)}>Login</NavigationItem>,
-            <NavigationItem link="/signup" clicked={this.showModalHandler.bind(this)}>New Account</NavigationItem>]}
+            [<NavigationItem key ={Math.random(1000)} link="/login" clicked={this.showModalHandler.bind(this)}>Login</NavigationItem>,
+            <NavigationItem key ={Math.random(1000)} link="/signup" clicked={this.showModalHandler.bind(this)}>New Account</NavigationItem>]}
         </ul>
       </Aux >
     )

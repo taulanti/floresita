@@ -88,9 +88,6 @@ class Signin extends Component {
         </p>
       )
     }
-    console.log(`is profileopen: ${this.state.isProfileOpen}`)
-    console.log(`is redirect true: ${this.state.isRedirect}`)
-    console.log(`inside SIGNIN show: ${this.state.show}`);
     return (
       this.state.isRedirect ? <Redirect to="/home" /> : (this.state.isProfileOpen ? <Profile showProfile={this.state.show} /> :        
         <Modal show={this.state.isModalOpen}>

@@ -1,7 +1,6 @@
 import React from 'react'
 import classes from './SideDrawer.module.css';
 import { NavLink } from 'react-router-dom';
-import Avatar from '../Avatar/Avatar';
 
 
 const SideDrawer = (props) => {
